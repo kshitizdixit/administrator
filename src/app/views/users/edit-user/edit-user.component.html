@@ -1,0 +1,71 @@
+<div class="bg-light min-vh-80 d-flex flex-row align-items-center">
+  <c-container  style="padding-top: 100px;">
+    <c-row class="justify-content-center">
+      <c-col lg="7" md="9" xl="6">
+        <c-card class="mx-4">
+          <c-card-body class="p-4">
+            <form cForm [formGroup]="userForm" (ngSubmit)="updateUser(userForm.value)">
+              <h2>Update Profile</h2>
+              <!--<p class="text-medium-emphasis">Create your account</p>-->
+              <c-input-group class="mb-3">
+                <span cInputGroupText>@</span>
+                <input readonly autoComplete="email" formControlName="email" cFormControl placeholder="Email"/>
+              </c-input-group>
+              <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg cIcon name="cilUser"></svg>
+                </span>
+                <input autoComplete="name" formControlName="fullname" cFormControl placeholder="Full Name" required/>                
+              </c-input-group>
+              <div style="color:red"  *ngIf="userForm.controls['fullname'].invalid && (userForm.controls['fullname'].dirty || userForm.controls['fullname'].touched)" class="text-danger">                    
+                <span [hidden]="!userForm.controls['fullname'].errors?.['required']">Full name is required</span>
+                <span [hidden]="!userForm.controls['fullname'].errors?.['minlength']">Minimum 4 characters required</span>
+              </div>
+
+              <c-form-check>
+                <input cFormCheckInput type="radio" value="MALE" formControlName="gender" name="gender" />
+                <label cFormCheckLabel>Male</label>
+              </c-form-check>
+              <c-form-check>
+                <input cFormCheckInput type="radio" value="FEMALE" formControlName="gender" name="gender" checked/>
+                <label cFormCheckLabel>Female</label>
+              </c-form-check>             
+             <c-input-group class="mb-3">
+                <span cInputGroupText><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                </svg></span>
+                    <input type="text"
+                          class="form-control"                          
+                          formControlName="dob"
+                          placeholder="Datepicker"  
+                          placement="top"                        
+                          [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY' }"                          
+                          bsDatepicker>
+              </c-input-group>
+              <div style="color:red"  *ngIf="userForm.controls['dob'].invalid && (userForm.controls['dob'].dirty || userForm.controls['dob'].touched)" class="text-danger">                    
+                <span [hidden]="!userForm.controls['dob'].errors?.['required']">Date of birth is required</span>                
+              </div>
+
+              <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
+                    <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
+                    <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                  </svg>                 
+                </span>
+                <input autoComplete="phoneNumber" formControlName="phoneNumber" cFormControl placeholder="Phone Number" />
+              </c-input-group>
+              <div style="color:red"  *ngIf="userForm.controls['phoneNumber'].invalid && (userForm.controls['phoneNumber'].dirty || userForm.controls['phoneNumber'].touched)" class="text-danger">                    
+                <span [hidden]="!userForm.controls['phoneNumber'].errors?.['required']">Phone Number is required</span>
+                <span [hidden]="!userForm.controls['phoneNumber'].errors?.['minlength']">Minimum 9 characters required</span>
+              </div>                           
+              <div class="d-grid">
+                <button cButton color="primary" type="submit" [disabled]="!userForm.valid">Update Account</button>
+              </div>
+            </form>
+          </c-card-body>
+        </c-card>
+      </c-col>
+    </c-row>
+  </c-container>
+</div>

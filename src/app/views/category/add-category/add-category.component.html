@@ -1,0 +1,39 @@
+<div class="bg-light min-vh-80 d-flex flex-row align-items-center">
+  <c-container style="padding-top: 100px;">
+    <c-row class="justify-content-center">
+      <c-col lg="7" md="9" xl="6">
+        <c-card class="mx-4">
+          <c-card-body class="p-4">
+            <form cForm [formGroup]="addCategoryForm" (ngSubmit)="addCategory(addCategoryForm.value)">             
+              <h2 *ngIf="categoryId">Update Category</h2>
+              <h2 *ngIf="!categoryId">Add New Category</h2>
+              <span *ngIf="isError" style="color: red;">Category could not created</span>
+              <!--<p class="text-medium-emphasis">Create your account</p>-->
+              <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg cIcon name="cilUser"></svg>
+                </span>
+                <input autoComplete="name" formControlName="categoryName" cFormControl placeholder="Category Name" required/>                
+              </c-input-group>  
+              <div *ngIf="addCategoryForm.controls['categoryName'].touched && addCategoryForm.controls['categoryName'].invalid" class="alert alert-danger">
+                <div *ngIf="addCategoryForm.controls['categoryName'].errors && addCategoryForm.controls['categoryName'].errors?.['required']">Name is required.</div>
+              </div>            
+              <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg cIcon name="cilUser"></svg>
+                </span>                
+                <input autoComplete="name" (change)="onFileChange($event)" formControlName="categoryImage" type="file" cFormControl placeholder="Category Name"/>                
+              </c-input-group>
+              <!--<div *ngIf="addCategoryForm.controls['categoryImage'].touched && addCategoryForm.controls['categoryImage'].invalid" class="alert alert-danger">
+                <div *ngIf="addCategoryForm.controls['categoryImage'].errors && addCategoryForm.controls['categoryImage'].errors?.['required']">File is required.</div>
+              </div>-->                
+              <div class="d-grid">
+                <button cButton color="primary" type="submit" [disabled]="!addCategoryForm.valid">Save Category</button>
+              </div>
+            </form>
+          </c-card-body>
+        </c-card>
+      </c-col>
+    </c-row>
+  </c-container>
+</div>

@@ -1,0 +1,50 @@
+<div class="bg-light min-vh-80 d-flex flex-row align-items-center">
+  <c-container style="padding-top: 100px;">
+    <c-row class="justify-content-center">
+      <c-col lg="7" md="9" xl="6">
+        <c-card class="mx-4">
+          <c-card-body class="p-4">
+            <form cForm [formGroup]="userForm" (ngSubmit)="addUser(userForm.value)">
+              <h2>Create user account</h2>
+              <span *ngIf="isError" style="color: red;">Account could not created</span>
+              <!--<p class="text-medium-emphasis">Create your account</p>-->
+              <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg cIcon name="cilUser"></svg>
+                </span>
+                <input autoComplete="name" formControlName="fullname" cFormControl placeholder="Full Name" required/>                
+              </c-input-group>
+
+              <img src="" height="100px;" width="100px;"> 
+              <div style="color:red"  *ngIf="userForm.controls['fullname'].invalid && (userForm.controls['fullname'].dirty || userForm.controls['fullname'].touched)" class="text-danger">                    
+                <span [hidden]="!userForm.controls['fullname'].errors?.['required']">Full name is required</span>
+                <span [hidden]="!userForm.controls['fullname'].errors?.['minlength']">Minimum 4 characters required</span>
+              </div>
+              <c-input-group class="mb-3">
+                <span cInputGroupText>@</span>
+                <input autoComplete="email" formControlName="email" cFormControl placeholder="Email" />
+              </c-input-group>
+              <div style="color:red"  *ngIf="userForm.controls['email'].invalid && (userForm.controls['email'].dirty || userForm.controls['email'].touched)" class="text-danger">                    
+                <span [hidden]="!userForm.controls['email'].errors?.['required']">Email address is required</span>
+                <span [hidden]="!userForm.controls['email'].errors?.['pattern']">Invalid Email</span>
+              </div>
+              <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg cIcon name="cilLockLocked"></svg>
+                </span>
+                <input autoComplete="new-password" formControlName="password"  cFormControl placeholder="Password" type="password" />
+              </c-input-group>
+              <div style="color:red"  *ngIf="userForm.controls['password'].invalid && (userForm.controls['password'].dirty || userForm.controls['password'].touched)" class="text-danger">                    
+                <span [hidden]="!userForm.controls['password'].errors?.['required']">Password is required</span>
+                <span [hidden]="!userForm.controls['password'].errors?.['minlength']">Minimum 8 characters required</span>
+              </div>                          
+              <div class="d-grid">
+                <button cButton color="primary" type="submit" [disabled]="!userForm.valid">Create Account</button>
+              </div>
+            </form>
+          </c-card-body>
+        </c-card>
+      </c-col>
+    </c-row>
+  </c-container>
+</div>

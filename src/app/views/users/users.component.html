@@ -1,0 +1,82 @@
+<c-row>
+  <c-col xs>
+    <c-card class="mb-4">
+      <span *ngIf="successMessage" style="color: green;text-align: center;">{{successMessage}}</span>
+      <c-card-header>Users
+      </c-card-header>
+      <c-card-body>
+        <table [hover]="true" [responsive]="true" [striped]="true" align="middle" cTable class="mb-0 border">
+          <thead cTableColor="light">
+            <tr>
+              <th class="text-center">
+                <svg cIcon name="cilPeople"></svg>
+              </th>
+              <th>User</th>
+              <th class="text-center">Phone Number</th>
+              <th>Categories</th>
+              <th class="text-center">DoB</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users; index as i">
+              <td class="text-center">
+                <c-avatar size="md" src="{{ user.profilePicture }}" status="{{ user.status }}"></c-avatar>
+              </td>
+              <td>
+                <div>{{ user.fullname }}</div>
+                <div class="small text-medium-emphasis">
+                  <span>{{ user.gender }}</span> <span *ngIf="user.state"> | {{ user.state }}</span> | Registered:
+                  {{ user.createdAt | date:'mediumDate' }}
+                </div>
+              </td>
+              <td class="text-center">
+                <div>{{ user.phoneNumber }}</div>
+              </td>
+              <td>
+                <div class="clearfix">
+                  <span *ngFor="let category of user.preferredCategories; index as ind">
+                    {{ category.categoryName }}
+                  </span>
+                </div>
+              </td>
+              <td class="text-center">
+                <div>{{ user.dob }}</div>
+              </td>
+              <td>
+                <select (change)="changeUserStatus(user.userId);">
+                  <option value="active" [selected]="user.isActive"> Active </option>
+                  <option value="inactive" [selected]="!user.isActive"> Inactive </option>
+                </select>
+              </td>
+              <td>
+                <strong>
+                  <a (click)="editUser(user);">Edit</a>
+                  /<a (click)="deleteUser(user.userId);">Delete</a></strong>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+<nav aria-label="Page navigation example text-center">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <a class="page-link" aria-label="Previous" (click)="getUserData(currentPage-1)">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item" *ngFor="let page of totalPagesCount;let i = index;"
+      [ngClass]="{'active' : i === currentPage}">
+      <a class="page-link" (click)="getUserData(i)"> {{ i + 1 }} </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" aria-label="Next" (click)="getUserData(currentPage+1)">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,89 @@
+<!--<p>videos works!</p>
+<video width="320" height="240" controls>
+  <source src="http://www.youtube.com/embed/nIsCs9_-LP8">  
+Your browser does not support the video tag.
+</video> 
+
+<iframe width="420" height="315" [src]="sanitizer.bypassSecurityTrustResourceUrl(replaceLineBreak(videoIDD))" frameborder="0" allowfullscreen></iframe>
+-->
+<c-row>
+  <c-col xs>
+    <c-card class="mb-4">
+      <span *ngIf="successMessage" style="color: green;text-align: center;"></span>
+      <c-card-header>Videos       
+      </c-card-header>
+      <c-card-body>
+        <table
+          [hover]="true"
+          [responsive]="true"
+          [striped]="true"
+          align="middle"
+          cTable
+          class="mb-0 border"
+        >
+          <thead cTableColor="light">
+          <tr>
+            <th>#</th>
+            <th class="text-center">
+              Product Image
+            </th>
+            <th>User</th>
+            <th>Date Added</th>
+            <th class="text-center">Video</th>  
+            <th>Status</th>
+            <th>Action</th>          
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let video of videos; index as i;">
+            <td>{{i + 1}}</td>
+            <td class="text-center">
+              <c-avatar
+                size="md"
+                src="{{video.productImage}}"
+                status="{{video.productImage}}"
+              ></c-avatar>
+            </td>
+            <td>
+              <div>{{ video.userId }}</div>
+            </td>
+            <td>                       
+              <span>{{ video.dateAdded | date:'mediumDate' }}</span>               
+            </td>            
+            <td class="text-center">       
+              <iframe width="150" height="100"  [src]="sanitizeVideoUrl(video.url)" frameborder="0" allowfullscreen></iframe>
+            </td>
+            <td>              
+              <select (change)="changeVideoStatus(video.videoId);">
+                <option value="active" [selected]="video.isActive"> Active </option>
+                <option value="inactive" [selected]="!video.isActive"> Inactive </option>               
+              </select>
+            </td>
+            <td>             
+              <strong>                
+                <a (click)="deleteVideo(i, video.videoId);">Delete</a></strong>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+<nav aria-label="Page navigation example text-center">  
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <a class="page-link" aria-label="Previous" (click) = "getVideosData(currentPage-1)">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item" *ngFor="let vv of totalPagesCount;let i = index;" [ngClass]="{'active' : i === currentPage}">  
+      <a class="page-link" (click) = "getVideosData(i)"> {{ i + 1 }} </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" aria-label="Next" (click) = "getVideosData(currentPage+1)">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
